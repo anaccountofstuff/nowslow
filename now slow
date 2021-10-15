@@ -1,0 +1,13 @@
+local meta = assert(getrawmetatable,"not supported")(game)
+local chr = game:service'Players'.LocalPlayer.Character or game:service'Players'.LocalPlayer.CharacterAdded:wait()
+local cc = (newcclosure or protect_function)
+do
+  (make_writeable or setreadonly and function(...) setreadonly(..., false) end)(meta)
+end
+local backup = meta.__index
+meta.__index = cc(function(z, x)
+  if x == "WalkSpeed" then
+      return 25
+  end
+  return backup(z, x)
+end)
